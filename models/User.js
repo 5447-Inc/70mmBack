@@ -10,12 +10,13 @@ class User {
         
     }
 
-    save(){
+    save(cb){
         const db = getDB();
         db.collection('collection').insertOne(this).then(
             (data) => {
                 console.log("SAve")
                 console.log(data)
+                cb()
             }
         ).catch( (error) => {
             console.log("SAve error")
@@ -23,9 +24,8 @@ class User {
         })
     }
 
-
     static getUsers(){
-        
+
     }
 
 }

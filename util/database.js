@@ -8,7 +8,7 @@ const uri = "mongodb+srv://90mmUser:5447@cluster.rcddm.mongodb.net/users?retryWr
 const dbConnect = (cb) => {
     MongoClient.connect(uri).then(client => {
         _db = client.db()
-        cb(client)
+        cb()
 
     }).catch(
         err => {

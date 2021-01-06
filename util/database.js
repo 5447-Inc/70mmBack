@@ -1,30 +1,32 @@
-const MongoClient = require('mongodb').MongoClient;
+// WHEN USING MONGOOSE WE DONT NEED TO WORRY ABOUT THE CONNECTION CODE ITS DONE BY THE MONGOOSE LIBRARY ITSELF
 
-let _db;
+// const MongoClient = require('mongodb').MongoClient;
 
-// replace the uri string with your connection string.
-const uri = "mongodb+srv://90mmUser:5447@cluster.rcddm.mongodb.net/users?retryWrites=true&w=majority"
+// let _db;
 
-const dbConnect = (cb) => {
-    MongoClient.connect(uri).then(client => {
-        _db = client.db()
-        cb()
+// // replace the uri string with your connection string.
+// const uri = "mongodb+srv://90mmUser:5447@cluster.rcddm.mongodb.net/?retryWrites=true&w=majority"
 
-    }).catch(
-        err => {
-            console.log(err)
-            throw err
-        }
-    )
-}
+// const dbConnect = (cb) => {
+//     MongoClient.connect(uri).then(client => {
+//         _db = client.db()
+//         cb()
 
-const getDB = () => {
-    if(_db){
-        return _db
-    }
-    throw "No database found"
-}
+//     }).catch(
+//         err => {
+//             console.log(err)
+//             throw err
+//         }
+//     )
+// }
+
+// const getDB = () => {
+//     if(_db){
+//         return _db
+//     }
+//     throw "No database found"
+// }
 
 
-exports.dbConnect = dbConnect
-exports.getDB = getDB 
+// exports.dbConnect = dbConnect
+// exports.getDB = getDB 

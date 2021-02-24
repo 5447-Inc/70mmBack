@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-
+const bcrypt = require('bcryptjs');
+const CustomError = require("../util/CustomError")
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -31,36 +32,38 @@ const userSchema = new Schema({
 
 })
 // the model name is the name of the tables you use in the DB (DB is written in the URL code we have in server.js)
-module.exports = mongoose.model('User', userSchema)
+// this User constant is defined so that it can be uesd in the functions below
+const User = module.exports = mongoose.model('User', userSchema)
 
-// class User {
 
-//     constructor(name,email,password,phoneNumber){
-//         this.name = name
-//         this.email = email
-//         this.password = password
-//         this.phoneNumber = phoneNumber
-        
-//     }
+module.exports.addUser = function(newUser, callback){
+    bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if(err) throw err;
+        newUser.password = hash;
+        newUser.save(callback);
+    });
+    });
+}
 
-//     save(cb){
-//         const db = getDB();
-//         db.collection('collection').insertOne(this).then(
-//             (data) => {
-//                 console.log("SAve")
-//                 console.log(data)
-//                 cb()
-//             }
-//         ).catch( (error) => {
-//             console.log("SAve error")
-//             console.log(error)
-//         })
-//     }
+module.exports.getUserByEmail = (userName,cb) => {
 
-//     static getUsers(){
+    User.findOne({email : userName}).then(user => {
+        if (user) {
+            cb(user)
+        }
+        else{
+            throw new CustomError("This user does not exist");
+        }
+    });
 
-//     }
+}
 
-// }
+module.exports.comparePasswords = (password,hash,cb) => {
 
-// module.exports = User
+    bcrypt.compare(password, hash, (err, isMatch) => {
+        if(err) throw err;
+        cb(isMatch);
+    });
+    
+}

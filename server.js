@@ -8,12 +8,18 @@ const fetchRoutes = require('./routes/fetch')
 const errorHandler = require('./util/errorHandler')
 // create express app
 const mongoose = require('mongoose')
+const passport = require('passport');
+
 
 // this to check for tokens
 require("./config/passport");
+
 const app = express();
+
 //const dbConnect = require('./util/database').dbConnect;
 const { connect } = require('mongodb');
+// passport initialize
+app.use(passport.initialize());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 

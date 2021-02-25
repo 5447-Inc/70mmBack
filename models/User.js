@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs');
 const CustomError = require("../util/CustomError")
 const Schema = mongoose.Schema;
+var findOrCreate = require('mongoose-findorcreate')
 
 const userSchema = new Schema({
     name: {
@@ -14,7 +15,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true
+        required: false
     },
     phoneNumber: {
         type: Number,
@@ -31,6 +32,10 @@ const userSchema = new Schema({
 
 
 })
+// find and create is added
+
+userSchema.plugin(findOrCreate);
+
 // the model name is the name of the tables you use in the DB (DB is written in the URL code we have in server.js)
 // this User constant is defined so that it can be uesd in the functions below
 const User = module.exports = mongoose.model('User', userSchema)

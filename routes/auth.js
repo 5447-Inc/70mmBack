@@ -3,7 +3,6 @@ const { body, validationResult } = require('express-validator');
 const authController = require('../controllers/authController');
 const User = require('../models/User')
 const passport = require('passport');
-const { route } = require('./fetch');
 const jwt = require('jsonwebtoken');
 const router = express.Router()
 const secret = require("../secret/secret").secret

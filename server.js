@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const db = require('./util/database').getDB
 // routes
 const authRoute = require('./routes/auth') 
-const fetchRoutes = require('./routes/fetch')
+const productRoutes = require('./routes/product')
+const cartRoute = require('./routes/cart')
 // error handler
 const errorHandler = require('./util/errorHandler')
 // create express app
@@ -30,7 +31,9 @@ app.use(bodyParser.json())
 
 app.use("/auth",authRoute)
 
-app.use("/fetch",fetchRoutes)
+app.use("/cart",cartRoute)
+
+app.use("/product",productRoutes)
 
 app.get('/',(req, res) => {
     res.json({"message": "Welcome to EasyNotes application. Take notes quickly. Organize and keep track of all your notes.",

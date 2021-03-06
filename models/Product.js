@@ -14,9 +14,9 @@ const productSchema = new Schema({
         default: 1
     },
 
-    seller: {
-        type : String,
-        required: true
+    seller_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
     },
 
     description: {
@@ -26,5 +26,8 @@ const productSchema = new Schema({
 
 })
 // the model name is the name of the tables you use in the DB (DB is written in the URL code we have in server.js)
-module.exports = mongoose.model('Products', productSchema)
+const Product = module.exports = mongoose.model('Products', productSchema)
+
+
+
 

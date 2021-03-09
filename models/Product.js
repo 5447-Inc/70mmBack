@@ -14,6 +14,11 @@ const productSchema = new Schema({
         default: 1
     },
 
+    price: {
+        type: Number,
+        required: true
+    },
+
     seller_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -21,6 +26,10 @@ const productSchema = new Schema({
 
     description: {
         type : String
+    },
+    category : {
+        type: String,
+        required: true
     }
 
 

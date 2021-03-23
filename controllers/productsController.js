@@ -22,7 +22,7 @@ exports.addProduct =  (req,res,next) => {
     const category = req.body.category
     const product = new Product({name:name,quantity:quantity,description:description,seller_id:seller,price:price,category:category})
 
-    product.save().then(() => res.json({"message" : "Product Created"})).catch(err => console.log(err))
+    product.save().then(() => res.json({"message" : "Product Added"})).catch(err => console.log(err))
 
 
 }

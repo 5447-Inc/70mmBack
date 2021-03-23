@@ -10,6 +10,7 @@ const errorHandler = require('./util/errorHandler')
 // create express app
 const mongoose = require('mongoose')
 const passport = require('passport');
+const CookieParser = require('cookie-parser');
 
 
 // this to check for tokens
@@ -19,6 +20,36 @@ const app = express();
 
 //const dbConnect = require('./util/database').dbConnect;
 const { connect } = require('mongodb');
+
+// Add headers
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+// global middleware for setting authorization header
+app.use(CookieParser());
+app.use((req, res, next) => {
+    
+    const authHeader= req.cookies.token;
+    if (authHeader) {
+    req.headers.authorization = `Bearer ${authHeader}`;
+    }
+    next();
+});
 // passport initialize
 app.use(passport.initialize());
 // parse requests of content-type - application/x-www-form-urlencoded

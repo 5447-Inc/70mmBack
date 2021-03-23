@@ -42,17 +42,10 @@ router.get('/google/callback',passport.authenticate('google', { failureRedirect:
     const token = jwt.sign({ data: req.user }, secret , {
       expiresIn: 86400 // 1 day
     });
-    res.cookie('token', `Bearer ${token}`, { httpOnly: true });
-
-    res.json({
-      success: true,
-      token: `Bearer ${token}`,
-      user: {
-      id: req.user._id,
-      email: req.user.email, 
-      phoneNumber : req.user.phoneNumber
-      }
-  });
+    res.cookie('token', `${token}`, { httpOnly: true });
+    
+    res.redirect("http://localhost:3001")
+    
   }
 
 );

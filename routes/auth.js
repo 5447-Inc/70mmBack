@@ -3,7 +3,6 @@ const { body, validationResult } = require('express-validator');
 const authController = require('../controllers/authController');
 const User = require('../models/User')
 const passport = require('passport');
-const { route } = require('./fetch');
 const jwt = require('jsonwebtoken');
 const router = express.Router()
 const secret = require("../secret/secret").secret
@@ -43,20 +42,19 @@ router.get('/google/callback',passport.authenticate('google', { failureRedirect:
     const token = jwt.sign({ data: req.user }, secret , {
       expiresIn: 86400 // 1 day
     });
-    res.cookie('token', `Bearer ${token}`, { httpOnly: true });
-
-    res.json({
-      success: true,
-      token: `Bearer ${token}`,
-      user: {
-      id: req.user._id,
-      email: req.user.email, 
-      phoneNumber : req.user.phoneNumber
-      }
-  });
+    res.cookie('token', `${token}`, { httpOnly: true });
+    
+    res.redirect("http://localhost:3001")
+    
   }
 
 );
+
+router.get('/logout', passport.authenticate('jwt', { session: false }), (req,res,next) => {
+  //console.log(" In logout")
+  res.clearCookie("token",{path:'/'});
+  res.sendStatus(200);
+})
 
 //Error route
 router.get('/error',(req,res) => {

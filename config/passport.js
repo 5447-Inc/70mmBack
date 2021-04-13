@@ -16,16 +16,13 @@ opts.secretOrKey = secret.secret;
 // JWT
 // decodes the token
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    //console.log("In Jwt log")
-    //console.log(jwt_payload.data._id)
-    //  
+    console.log("In Jwt")
     User.findOne({"_id" :ObjectId(jwt_payload.data._id)}, function(err, user) {
         if (err) {
             console.log("In Jwt err")
             return done(err, false, { message: 'An error occurred ' });
         }
         else if (user) {
-            console.log("In Jwt user")
             return done(null, user);
         } 
         else {

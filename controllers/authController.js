@@ -47,12 +47,13 @@ exports.SignIn = (req,res,next) => {
             });
             
             // setting cookie in browser
-            res.cookie('token', `Bearer ${token}`, { httpOnly: true });
+            res.cookie('token', `${token}`, { httpOnly: true });
+
 
             // we don't want to send the user password in the json
             res.json({
                 success: true,
-                token: `Bearer ${token}`,
+                token: `${token}`,
                 user: {
                 id: user._id,
                 email: user.email, 
@@ -66,8 +67,8 @@ exports.SignIn = (req,res,next) => {
 }
 
 exports.getProfile = (req, res, next) => {
+    
     if(req.user){
-
         res.json({
             user: {
                 _id: req.user._id,

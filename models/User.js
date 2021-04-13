@@ -22,17 +22,12 @@ const userSchema = new Schema({
         required: false
     },
     cart: {
-        items: [
-            {
-                productId: {type: Schema.Types.ObjectId, required: true},
-                quantity: {type: Number, required: true}
-            }
-        ]
+        type: Schema.Types.ObjectId, 
+        ref: 'Cart' 
     }
-
-
 })
-// find and create is added
+
+// find and create is added used for the authentication
 
 userSchema.plugin(findOrCreate);
 
@@ -45,7 +40,7 @@ module.exports.addUser = function(newUser, callback){
     bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newUser.password, salt, (err, hash) => {
         if(err) throw err;
-        newUser.password = hash;
+        newUser.password = hash; 
         newUser.save(callback);
     });
     });
@@ -57,7 +52,7 @@ module.exports.getUserByEmail = (userName,cb) => {
         if (user) {
             cb(user)
         }
-        else{
+        else{ 
             throw new CustomError("This user does not exist");
         }
     });

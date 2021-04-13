@@ -45,6 +45,7 @@ app.use(CookieParser());
 app.use((req, res, next) => {
     
     const authHeader= req.cookies.token;
+    //console.log("In the cookie",authHeader)
     if (authHeader) {
     req.headers.authorization = `Bearer ${authHeader}`;
     }

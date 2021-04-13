@@ -50,6 +50,12 @@ router.get('/google/callback',passport.authenticate('google', { failureRedirect:
 
 );
 
+router.get('/logout', passport.authenticate('jwt', { session: false }), (req,res,next) => {
+  //console.log(" In logout")
+  res.clearCookie("token",{path:'/'});
+  res.sendStatus(200);
+})
+
 //Error route
 router.get('/error',(req,res) => {
   res.json({message : 'Authentication error occured'} )

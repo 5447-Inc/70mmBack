@@ -1,4 +1,5 @@
 const Product = require("../models/Product")
+const User = require("../models/User")
 
 exports.fetchProducts = (req,res,next) => {
     Product.find({},(products, err) => {
@@ -7,6 +8,23 @@ exports.fetchProducts = (req,res,next) => {
         }
     
         res.json(products)
+        
+    })
+    
+}
+
+exports.fetchProduct = (req,res,next) => {
+    Product.findOne({_id:req.query.id},(product, err) => {
+        if(err){
+            return res.json(err)
+        }
+        User.findById({_id: product.seller_id},(user,err) => {
+            console.log("In here")
+            return  res.json({...product,seller_name:user.name})
+
+        })
+        
+        return;
         
     })
     

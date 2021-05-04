@@ -7,5 +7,7 @@ router.get("/getProducts",fetchController.fetchProducts)
 
 router.post("/addProduct",fetchController.addProduct)
 
+router.get("/getProduct",fetchController.fetchProduct)
+
 
 module.exports = router 

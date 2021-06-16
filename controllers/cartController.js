@@ -6,6 +6,10 @@ const deleteItemFromCart = require("../models/Cart").deleteItemFromCart
 const {ObjectId} = require('mongodb');
 const CustomError = require('../util/CustomError')
 
+// Include fs module
+let fs = require('fs')
+
+
 exports.fetchCart = (req,res,next) => {
     const userID = req.user._id
     getCart(userID,(cart)=>{
@@ -35,8 +39,6 @@ exports.deleteFromCart = (req,res,next) => {
     const itemID =  req.query.itemID
     const userID = req.user._id
     
-    console.log("Item ID",itemID)
-    console.log("User ID",userID)
     
     deleteItemFromCart({itemID:itemID,userID:userID},(cart) => {
         if(!cart){
@@ -48,3 +50,4 @@ exports.deleteFromCart = (req,res,next) => {
     })
 
 }
+

@@ -27,7 +27,23 @@ exports.postSignup = (req,res,next) => {
             if (err) {
             res.json({ success: false, msg: 'Failed to register user' });
             } else {
-            res.json({ success: true, msg: 'User registered' });
+                //console.log("User",user)
+                const token = jwt.sign({ data: user }, secret , {
+                    expiresIn: 86400 // 1 day
+                });
+
+            
+                
+                if(token){
+                    console.log("In user signUp",token)
+                    res.cookie('token', `${token}`, { httpOnly: true });
+
+                    res.json({success: true, user: user})
+                    /// test 
+                    res.redirect("http://localhost:3001")
+                }
+        
+            
             }
         });
             
@@ -35,6 +51,10 @@ exports.postSignup = (req,res,next) => {
 }
 
 exports.SignIn = (req,res,next) => {
+
+    // console.log("Email",req.body.email)
+    // console.log("Password",req.body.password)
+
     User.getUserByEmail(req.body.email,(user) => {
         
         User.comparePasswords(req.body.password, user.password, (isMatch) => {
@@ -47,19 +67,15 @@ exports.SignIn = (req,res,next) => {
             });
             
             // setting cookie in browser
-            res.cookie('token', `${token}`, { httpOnly: true });
+        
+            if(token){
+                console.log("In user signIN",token)
+                res.cookie('token', `${token}`, { httpOnly: true });
 
-
-            // we don't want to send the user password in the json
-            res.json({
-                success: true,
-                token: `${token}`,
-                user: {
-                id: user._id,
-                email: user.email, 
-                phoneNumber : user.phoneNumber
-                }
-            });
+                res.json({success: true, user: user})
+                /// test 
+                res.redirect("http://localhost:3001")
+            }
 
         })
     })

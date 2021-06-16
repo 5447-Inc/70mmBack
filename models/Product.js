@@ -30,13 +30,12 @@ const productSchema = new Schema({
     category : {
         type: String,
         required: true
+    },
+    imageName : {
+        type: String,
+        required: true
     }
-
 
 })
 // the model name is the name of the tables you use in the DB (DB is written in the URL code we have in server.js)
 const Product = module.exports = mongoose.model('Products', productSchema)
-
-
-
-

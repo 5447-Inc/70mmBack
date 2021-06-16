@@ -11,6 +11,16 @@ const errorHandler = require('./util/errorHandler')
 const mongoose = require('mongoose')
 const passport = require('passport');
 const CookieParser = require('cookie-parser');
+//cors 
+var cors = require('cors')
+// multer
+const multer  = require('multer');
+var upload = multer();
+const GridFSStorage = require('multer-gridfs-storage');
+const mongoUrl = "mongodb+srv://90mmUser:5447@cluster.rcddm.mongodb.net/70mmDB?retryWrites=true&w=majority"
+
+var Grid = require('gridfs-stream');
+
 
 
 // this to check for tokens
@@ -21,7 +31,11 @@ const app = express();
 //const dbConnect = require('./util/database').dbConnect;
 const { connect } = require('mongodb');
 
-// Add headers
+//cors initialize
+//app.use(cors({ origin: 'http://localhost:3001', credentials: true }))
+
+
+//Add headers
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
@@ -39,6 +53,9 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+
+
+
 // global middleware for setting authorization header
 app.use(CookieParser());
 app.use((req, res, next) => {
@@ -57,6 +74,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // parse requests of content-type - application/json basically send requests in json format
 app.use(bodyParser.json())
+
+// for parsing multipart/form-data
+// app.use(upload.array()); 
+// app.use(express.static('public'));
 
 // commented the following two lines for testing
 
@@ -82,10 +103,19 @@ app.use(function (err, req, res, next) {
     })
     
 })
+const connection = mongoose.connect(mongoUrl,{useNewUrlParser: true, useUnifiedTopology: true});
 
-mongoose.connect("mongodb+srv://90mmUser:5447@cluster.rcddm.mongodb.net/70mmDB?retryWrites=true&w=majority",{useNewUrlParser: true, useUnifiedTopology: true}).then(result => {
+
+
+// Init gfs
+
+connection.then(result => {
+
     app.listen(3000)
+
 }).catch( err => console.log(err))
+
+
 
 
 

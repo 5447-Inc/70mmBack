@@ -48,7 +48,7 @@ router.get('/google/callback',passport.authenticate('google', { failureRedirect:
     
     // res.redirect("http://localhost:3001")
 
-    res.cookie('token', `${token}`, { httpOnly: true }).json({success: true, user: req.user})
+    res.cookie('token', `${token}`, { httpOnly: true }).json({success: true, user: req.user}).redirect("http://localhost:3001")
     
   }
 

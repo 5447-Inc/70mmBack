@@ -53,8 +53,11 @@ module.exports.getUserByEmail = (userName,cb) => {
             cb(user)
         }
         else{ 
+
             throw new CustomError("This user does not exist");
         }
+    }).catch(err => {
+        cb(err)
     });
 
 }

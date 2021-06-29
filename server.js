@@ -92,6 +92,10 @@ app.get('/',(req, res) => {
                 });
 });
 
+app.get('/appRedirect',(req, res) => {
+    res.redirect("http://localhost:3001")
+});
+
 app.use(function (err, req, res, next) {
     // logic
     const status = err.statusCode || 500

@@ -48,7 +48,7 @@ router.get('/google/callback',passport.authenticate('google', { failureRedirect:
     
     // res.redirect("http://localhost:3001")
 
-    res.cookie('token', `${token}`, { httpOnly: true }).redirect("https://shopping-app-akj.herokuapp.com")
+    res.cookie('token', `${token}`, { httpOnly: true }).redirect("https://shopping-app-akj.herokuapp.com/appRedirect")
     
   }
 

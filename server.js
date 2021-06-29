@@ -21,7 +21,7 @@ const mongoUrl = "mongodb+srv://90mmUser:5447@cluster.rcddm.mongodb.net/70mmDB?r
 
 var Grid = require('gridfs-stream');
 
-
+const PORT = 3000 || process.env.PORT
 
 // this to check for tokens
 require("./config/passport");
@@ -111,7 +111,7 @@ const connection = mongoose.connect(mongoUrl,{useNewUrlParser: true, useUnifiedT
 
 connection.then(result => {
 
-    app.listen(3000)
+    app.listen(PORT)
 
 }).catch( err => console.log("In here",err))
 

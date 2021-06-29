@@ -15,6 +15,7 @@ body('email').isEmail().withMessage("Please enter valid email").custom((input,{r
 
     return User.findOne({email : input}).then(user => {
         if (user) {
+        
         return Promise.reject('E-mail already in use');
         }
     });

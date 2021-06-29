@@ -49,7 +49,7 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 passport.use(new GoogleStrategy({
     clientID: secret.GOOGLE_CLIENT_ID,
     clientSecret: secret.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "https://shopping-app-akj.herokuapp.com/auth/google/callback"
 },
     function(accessToken, refreshToken, profile, done) {
         User.findOrCreate({ name: profile.displayName, email: profile._json.email }, 

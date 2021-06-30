@@ -39,7 +39,7 @@ const { connect } = require('mongodb');
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3001');
+    res.setHeader('Access-Control-Allow-Origin', 'https://akj-shopping.herokuapp.com')
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
@@ -92,9 +92,7 @@ app.get('/',(req, res) => {
                 });
 });
 
-app.get('/appRedirect',(req, res) => {
-    res.redirect("http://localhost:3001")
-});
+
 
 app.use(function (err, req, res, next) {
     // logic

@@ -39,7 +39,13 @@ const { connect } = require('mongodb');
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'https://akj-shopping.herokuapp.com')
+    //res.setHeader('Access-Control-Allow-Origin', 'https://akj-shopping.herokuapp.com')
+
+    const allowedOrigins = [ 'https://akj-shopping.herokuapp.com','http://localhost:3000'];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');

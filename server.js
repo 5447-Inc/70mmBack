@@ -65,7 +65,7 @@ app.use(function (req, res, next) {
 // global middleware for setting authorization header
 app.use(CookieParser());
 app.use((req, res, next) => {
-    
+    console.log("In cookie parser")
     const authHeader= req.cookies.token;
     //console.log("In the cookie",authHeader)
     if (authHeader) {
